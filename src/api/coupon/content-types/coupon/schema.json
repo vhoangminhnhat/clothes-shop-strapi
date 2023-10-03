@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coupons",
+  "info": {
+    "singularName": "coupon",
+    "pluralName": "coupons",
+    "displayName": "Coupon",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "clothes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::clothe.clothe",
+      "inversedBy": "coupons"
+    }
+  }
+}

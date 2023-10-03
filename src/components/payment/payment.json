@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_payment_payments",
+  "info": {
+    "displayName": "Payment"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

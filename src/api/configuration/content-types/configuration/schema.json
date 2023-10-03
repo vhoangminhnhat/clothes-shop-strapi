@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "configurations",
+  "info": {
+    "singularName": "configuration",
+    "pluralName": "configurations",
+    "displayName": "Configuration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "paymentMethod": {
+      "type": "json"
+    },
+    "paymentMethods": {
+      "type": "enumeration",
+      "enum": [
+        "cash",
+        "momo",
+        "banking"
+      ]
+    }
+  }
+}

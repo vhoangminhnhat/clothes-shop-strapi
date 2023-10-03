@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_item_items",
+  "info": {
+    "displayName": "Items"
+  },
+  "options": {},
+  "attributes": {
+    "clothe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::clothe.clothe"
+    },
+    "quantity": {
+      "type": "integer"
+    }
+  }
+}

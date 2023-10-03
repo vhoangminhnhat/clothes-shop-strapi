@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clothes",
+  "info": {
+    "singularName": "clothe",
+    "pluralName": "clothes",
+    "displayName": "Clothes",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::type.type",
+      "inversedBy": "clothes"
+    },
+    "color": {
+      "displayName": "Color",
+      "type": "component",
+      "repeatable": true,
+      "component": "color.color"
+    },
+    "coupons": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::coupon.coupon",
+      "mappedBy": "clothes"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "cart": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cart.cart",
+      "inversedBy": "clothes"
+    }
+  }
+}
