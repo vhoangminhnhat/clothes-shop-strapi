@@ -91,6 +91,7 @@ module.exports = ({ strapi }) => ({
       console.log(error);
     }
   },
+  //1234567 test 
 
   async remove_list({ name, code }) {
     // === Xóa sản phẩm quần áo theo dữ liệu từ body (tên || loại) ===
