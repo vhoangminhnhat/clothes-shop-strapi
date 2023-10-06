@@ -1,19 +1,5 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface ColorColor extends Schema.Component {
-  collectionName: 'components_color_colors';
-  info: {
-    displayName: 'Color';
-    description: '';
-  };
-  attributes: {
-    name: Attribute.String;
-    code: Attribute.String;
-    img: Attribute.Media;
-    size: Attribute.Component<'size.size', true>;
-  };
-}
-
 export interface ItemItems extends Schema.Component {
   collectionName: 'components_item_items';
   info: {
@@ -35,25 +21,29 @@ export interface PaymentPayment extends Schema.Component {
   };
 }
 
-export interface SizeSize extends Schema.Component {
-  collectionName: 'components_size_sizes';
+export interface QuantityQuantity extends Schema.Component {
+  collectionName: 'components_quantity_quantities';
   info: {
-    displayName: 'Size';
+    displayName: 'Quantity';
     description: '';
   };
   attributes: {
-    name: Attribute.String;
-    quantity: Attribute.BigInteger;
+    quantities: Attribute.Integer;
+    color: Attribute.Relation<
+      'quantity.quantity',
+      'oneToOne',
+      'api::color.color'
+    >;
+    size: Attribute.Relation<'quantity.quantity', 'oneToOne', 'api::size.size'>;
   };
 }
 
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'color.color': ColorColor;
       'item.items': ItemItems;
       'payment.payment': PaymentPayment;
-      'size.size': SizeSize;
+      'quantity.quantity': QuantityQuantity;
     }
   }
 }

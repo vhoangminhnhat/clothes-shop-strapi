@@ -772,7 +772,6 @@ export interface ApiClotheClothe extends Schema.CollectionType {
       'manyToOne',
       'api::type.type'
     >;
-    color: Attribute.Component<'color.color', true>;
     coupons: Attribute.Relation<
       'api::clothe.clothe',
       'manyToMany',
@@ -784,6 +783,7 @@ export interface ApiClotheClothe extends Schema.CollectionType {
       'manyToOne',
       'api::cart.cart'
     >;
+    quantity: Attribute.Component<'quantity.quantity', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -794,6 +794,37 @@ export interface ApiClotheClothe extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::clothe.clothe',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiColorColor extends Schema.CollectionType {
+  collectionName: 'colors';
+  info: {
+    singularName: 'color';
+    pluralName: 'colors';
+    displayName: 'Color';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    code: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::color.color',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::color.color',
       'oneToOne',
       'admin::user'
     > &
@@ -865,6 +896,29 @@ export interface ApiCouponCoupon extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSizeSize extends Schema.CollectionType {
+  collectionName: 'sizes';
+  info: {
+    singularName: 'size';
+    pluralName: 'sizes';
+    displayName: 'Size';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    code: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::size.size', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::size.size', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -959,8 +1013,10 @@ declare module '@strapi/types' {
       'api::carousel.carousel': ApiCarouselCarousel;
       'api::cart.cart': ApiCartCart;
       'api::clothe.clothe': ApiClotheClothe;
+      'api::color.color': ApiColorColor;
       'api::configuration.configuration': ApiConfigurationConfiguration;
       'api::coupon.coupon': ApiCouponCoupon;
+      'api::size.size': ApiSizeSize;
       'api::transaction.transaction': ApiTransactionTransaction;
       'api::type.type': ApiTypeType;
     }

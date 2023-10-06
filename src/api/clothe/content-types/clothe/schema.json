@@ -29,12 +29,6 @@
       "target": "api::type.type",
       "inversedBy": "clothes"
     },
-    "color": {
-      "displayName": "Color",
-      "type": "component",
-      "repeatable": true,
-      "component": "color.color"
-    },
     "coupons": {
       "type": "relation",
       "relation": "manyToMany",
@@ -49,6 +43,12 @@
       "relation": "manyToOne",
       "target": "api::cart.cart",
       "inversedBy": "clothes"
+    },
+    "quantity": {
+      "displayName": "Quantity",
+      "type": "component",
+      "repeatable": true,
+      "component": "quantity.quantity"
     }
   }
 }

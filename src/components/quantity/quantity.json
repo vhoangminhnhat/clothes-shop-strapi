@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_quantity_quantities",
+  "info": {
+    "displayName": "Quantity",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "quantities": {
+      "type": "integer"
+    },
+    "color": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::color.color"
+    },
+    "size": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::size.size"
+    }
+  }
+}

@@ -13,10 +13,10 @@ module.exports = ({ strapi }) => ({
 
   async createList(ctx) {
     try {
-      const {name, code, type, price, description, size, color} = ctx.request.body;
+      const {name, code, type, price, description, quantity} = ctx.request.body;
       const createClothes = await strapi
         .service('api::clothe.custom')
-        .create_list({name, code, type, price, description, size, color});
+        .create_list({name, code, type, price, description, quantity});
       return createClothes;
     } catch (error) {
       return error;
