@@ -11,8 +11,8 @@ module.exports = ({strapi}) => ({
 
     async createCart(ctx){
         try {
-            const {code, size, color, quantity} = ctx.request.body;
-            const createCarts = await strapi.service('api::cart.custom').add_to_cart({code, size, color, quantity})
+            const {name, code, size, color, quantity} = ctx.request.body;
+            const createCarts = await strapi.service('api::cart.custom').add_to_cart({name, code, size, color, quantity})
             return createCarts;
         } catch (error) {
             console.log(error)

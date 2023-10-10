@@ -1,74 +1,87 @@
 const _ = require("lodash");
 
 module.exports = ({ strapi }) => ({
-  async add_to_cart({ code, size, color, quantity }) {
-    if (_.isEmpty(code)) {
-      return { message: "Code must not be empty !" };
-    }
+  async add_to_cart ({code, quantity, color, size}) {
+    let array = [];
+    if(_.isEmpty(code)) {
+      return {messege: "Code must not be empty !"}
+    };
 
-    if (_.isEmpty(size)) {
-      return { message: "Size nmusst not be empty !" };
-    }
+    if (quantity <= 0) {
+      return {messege: "Quantity must be positive !"}
+    };
 
-    if (_.isEmpty(color)) {
-      return { message: "Color must not be empty !" };
-    }
+    if(!_.isString(color)){
+      return {messege: "Color must be a String !"}
+    };
 
-    if (quantity < 0) {
-      return { message: "Quanlity must be positive !" };
-    }
+    if(!_.isString(size)) {
+      return {messege: "Size must be a String !"}
+    };
 
-    if (quantity == 0) {
-      return {
-        message: "There is no quantity for this kind of clothes in the storage",
-      };
-    }
+    const checkCode = await strapi.db.query('api::clothe.clothe').findOne({
+      where: {
+        code: code,
+      },
+      populate: {
+        quantity: {
+          populate: {
+            color: true,
+            size: true
+          }
+        }
+      }
+    });
 
-    if (_.isString(code)) {
-      const checkCode = await strapi.db.query("api::clothe.clothe").findOne({
+    if(checkCode) {
+      const checkColor = await strapi.db.query('api::color.color').findOne({
         where: {
-          code: code,
-        },
-        populate: {
-          color: {
-            populate: {
-              size: true,
-            },
-          },
-        },
+          code: color
+        }
       });
-      if (checkCode) {
-        const colorArr = _.get(checkCode, "color", []);
-        const clothesId = _.get(checkCode, "id", "");
-        if (!_.isEmpty(colorArr)) {
-          const colors = colorArr.find((val) => val.code === color);
-          if (colors) {
-            const sizeArr = _.get(_.first(colorArr), "size", []);
-            if (!_.isEmpty(sizeArr)) {
-              const sizeValue = sizeArr.find((val) => val.name === size);
-              const quantityValue = _.get(sizeValue, "quantity");
-              if (quantityValue - quantity > 0) {
-                try {
-                  const res = await strapi.db.query("api::cart.cart").create({
-                    data: {
-                      code: code,
-                      size: size,
-                      color: color,
-                      quantity: quantity,
-                      clothes: checkCode,
-                    },
-                    populate: {
-                      clothes: true,
-                    },
-                  });
-                  return res;
-                } catch (error) {
-                  console.log(error);
+
+      const checkSize = await strapi.db.query('api::size.size').findOne({
+        where: {
+          code: size
+        }
+      });
+
+      if(!checkColor) {
+        return {messege: "Color does not exist !"}
+      };
+
+      if (!checkSize) {
+        return {messege: "Size does not exist !"}
+      };
+
+      const colorName = _.get(checkColor, "name");
+      const sizeName = _.get(checkSize, "name");
+      try {
+        const res = await strapi.db.query('api::cart.cart').create({
+          data: {
+            name: _.get(checkCode, "name"),
+            code: code,
+            quantity: quantity,
+            size: sizeName,
+            color: colorName,
+            clothes: _.get(checkCode, "id")
+          },
+          populate: {
+            clothes: {
+              populate: {
+                quantity: {
+                  populate: {
+                    color: true,
+                    size: true
+                  }
                 }
               }
             }
           }
-        }
+        });
+        return res;
+      } catch (error) {
+        console.log(error)
       }
     }
   },
