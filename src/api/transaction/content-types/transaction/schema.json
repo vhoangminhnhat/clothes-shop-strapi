@@ -47,11 +47,11 @@
     "toDate": {
       "type": "datetime"
     },
-    "items": {
-      "displayName": "Items",
-      "type": "component",
-      "repeatable": true,
-      "component": "item.items"
+    "carts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cart.cart",
+      "mappedBy": "transaction"
     }
   }
 }

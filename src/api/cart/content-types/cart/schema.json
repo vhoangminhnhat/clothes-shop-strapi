@@ -35,6 +35,12 @@
     },
     "quantity": {
       "type": "integer"
+    },
+    "transaction": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::transaction.transaction",
+      "inversedBy": "carts"
     }
   }
 }

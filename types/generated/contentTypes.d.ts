@@ -742,6 +742,11 @@ export interface ApiCartCart extends Schema.CollectionType {
     color: Attribute.String;
     size: Attribute.String;
     quantity: Attribute.Integer;
+    transaction: Attribute.Relation<
+      'api::cart.cart',
+      'manyToOne',
+      'api::transaction.transaction'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -948,7 +953,11 @@ export interface ApiTransactionTransaction extends Schema.CollectionType {
     phoneNumber: Attribute.String;
     fromDate: Attribute.DateTime;
     toDate: Attribute.DateTime;
-    items: Attribute.Component<'item.items', true>;
+    carts: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToMany',
+      'api::cart.cart'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
